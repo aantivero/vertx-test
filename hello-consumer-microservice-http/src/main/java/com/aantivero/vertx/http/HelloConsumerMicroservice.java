@@ -1,12 +1,11 @@
 package com.aantivero.vertx.http;
 
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.client.HttpRequest;
-import io.vertx.ext.web.client.WebClient;
-import io.vertx.ext.web.codec.BodyCodec;
+import io.vertx.rxjava.core.AbstractVerticle;
+import io.vertx.rxjava.ext.web.*;
+import io.vertx.rxjava.ext.web.client.*;
+import io.vertx.rxjava.ext.web.codec.BodyCodec;
+import rx.Single;
 
 public class HelloConsumerMicroservice extends AbstractVerticle {
 
@@ -21,22 +20,34 @@ public class HelloConsumerMicroservice extends AbstractVerticle {
 
         vertx.createHttpServer()
                 .requestHandler(router)
-                .listen(8081);
+                .listen(9090);
     }
 
     private void invokeMyFirstMicroservice(RoutingContext routingContext) {
-        HttpRequest<JsonObject> request = webClient
-                .get(8080, "localhost", "/vert.x")
+        HttpRequest<JsonObject> request1 = webClient
+                .get(8080, "localhost", "/Luke")
+                .as(BodyCodec.jsonObject());
+        HttpRequest<JsonObject> request2 = webClient
+                .get(8080, "localhost", "/Leia")
                 .as(BodyCodec.jsonObject());
 
-        request.send(ar -> {
-            if (ar.failed()){
-                routingContext.fail(ar.cause());
-            } else {
-                routingContext.response()
-                        .end(ar.result().body().encode());
-            }
-        });
+        Single<JsonObject> s1 = request1.rxSend().map(HttpResponse::body);
+        Single<JsonObject> s2 = request2.rxSend().map(HttpResponse::body);
+
+        Single
+                .zip(s1, s2, (luke, leia) -> {
+                    return new JsonObject()
+                            .put("Luke", luke.getString("message"))
+                            .put("Leia", leia.getString("message"));
+                })
+                .subscribe(
+                        result -> routingContext.response().end(result.encodePrettily()),
+                        error -> {
+                            error.printStackTrace();
+                            routingContext.response()
+                                    .setStatusCode(500).end(error.getMessage());
+                        }
+                );
     }
 
 }
