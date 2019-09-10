@@ -34,3 +34,8 @@ mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
 Este microservicio se ejecuta en modo cluster
 
 mvn compile vertx:run -Dvertx.runArgs="-cluster -Djava.net.preferIPv4Stack=true"
+
+Microservicio cliente basado en mensajes (consumidor del anterior)
+
+mkdir hello-consumer-microservice-message && cd hello-consumer-microservice-message
+

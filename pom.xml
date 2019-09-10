@@ -13,5 +13,6 @@
         <module>hello-microservice-http</module>
         <module>hello-consumer-microservice-http</module>
         <module>hello-microservice-message</module>
+        <module>hello-consumer-microservice-message</module>
     </modules>
 </project>
