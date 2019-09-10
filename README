@@ -8,3 +8,6 @@ mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
 -Dverticle=com.aantivero.vertx.http.HelloMicroservice \
 -Ddependencies=web
 
+Para compilar y ejecutar on the fly cada vez que se guarda un archivo
+mvn clean compile vertx:run
+
