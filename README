@@ -1,0 +1,10 @@
+
+Primer ejemplo de microservicio con vertx
+
+mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
+-DprojectGroupId=com.aantivero \
+-DprojectArtifactId=hello-microservice-http \
+-DprojectVersion=1.0-SNAPSHOT \
+-Dverticle=com.aantivero.vertx.http.HelloMicroservice \
+-Ddependencies=web
+
