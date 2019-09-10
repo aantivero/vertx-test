@@ -11,3 +11,11 @@ mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
 Para compilar y ejecutar on the fly cada vez que se guarda un archivo
 mvn clean compile vertx:run
 
+El consumidor
+
+mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
+-DprojectGroupId=com.aantivero \
+-DprojectArtifactId=hello-consumer-microservice-http \
+-DprojectVersion=1.0-SNAPSHOT \
+-Dverticle=com.aantivero.vertx.http.HelloConsumerMicroservice \
+-Ddependencies=web,web-client,rx
