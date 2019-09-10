@@ -39,3 +39,10 @@ Microservicio cliente basado en mensajes (consumidor del anterior)
 
 mkdir hello-consumer-microservice-message && cd hello-consumer-microservice-message
 
+mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
+-DprojectGroupId=com.aantivero \
+-DprojectArtifactId=hello-consumer-microservice-message \
+-DprojectVersion=1.0-SNAPSHOT \
+-Dverticle=com.aantivero.vertx.message.HelloConsumerMicroserviceMessage \
+-Ddependencies=infinispan,rx
+
