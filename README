@@ -19,3 +19,18 @@ mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
 -DprojectVersion=1.0-SNAPSHOT \
 -Dverticle=com.aantivero.vertx.http.HelloConsumerMicroservice \
 -Ddependencies=web,web-client,rx
+
+Microservicio basado en Mensajes (Infinispan)
+
+mkdir hello-microservice-message && cd hello-microservice-message
+
+mvn io.reactiverse:vertx-maven-plugin:1.0.20:setup \
+-DprojectGroupId=com.aantivero \
+-DprojectArtifactId=hello-microservice-message \
+-DprojectVersion=1.0-SNAPSHOT \
+-Dverticle=com.aantivero.vertx.message.HelloMicroserviceMessage \
+-Ddependencies=infinispan
+
+Este microservicio se ejecuta en modo cluster
+
+mvn compile vertx:run -Dvertx.runArgs="-cluster -Djava.net.preferIPv4Stack=true"
